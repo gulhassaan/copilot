@@ -114,6 +114,7 @@
     // Initialize MSAL when the script loads
     initializeMsal();
 
+    // Sign-in function
     function onSignin() {
       let user = clientApplication.getAccount();
       if (user) {
@@ -121,6 +122,7 @@
       }
     }
 
+    // Sign-in button click handler
     function onSignInClick() {
       let requestObj = {
         scopes: ["user.read", 'openid', 'profile']
@@ -130,6 +132,7 @@
       });
     }
 
+    // Function to get the OAuth card resource URI
     function getOAuthCardResourceUri(activity) {
       if (activity &&
         activity.attachments &&
@@ -140,6 +143,7 @@
       }
     }
 
+    // Function to exchange the token
     function exchangeTokenAsync(resourceUri) {
       let user = clientApplication.getAccount();
       if (user) {
@@ -158,6 +162,7 @@
       }
     }
 
+    // Function to fetch JSON data
     async function fetchJSON(url, options = {}) {
       const res = await fetch(url, {
         ...options,
@@ -174,10 +179,14 @@
       return await res.json();
     }
 
+    // Main function
     (async function main() {
       const user = clientApplication.getAccount();
       if (user) {
         onSignin();
+      } else {
+        // Trigger automatic login if user is not logged in
+        onSignInClick();
       }
 
       const botTokenUrl = "https://default1cb82e6276094823a51d3cd9c47a98.16.environment.api.powerplatform.com/powervirtualagents/botsbyschema/cr865_copilot1_R1fuin/directline/token?api-version=2022-03-01-preview";
